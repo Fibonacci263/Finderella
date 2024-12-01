@@ -1,70 +1,108 @@
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+import express from "express"
+import mongoose from "mongoose";
+import multer from "multer";
+import cors from "cors";
+import path from "path"
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-// const app = express();
+const app = express();
 
-// // Middleware
-// app.use(cors());
-// app.use(bodyParser.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// // MongoDB connection string
-// const dbURI = 'mongodb://localhost:27017/'; 
+// Middleware
+app.use(express.json());
+app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => {
-//     console.log('MongoDB connected');
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
 
-// // Schema for Lost Items
-// const lostItemSchema = new mongoose.Schema({
-//   title: String,
-//   description: String,
-//   category: String,
-//   location: String,
-//   dateLost: String,
-//   postedBy: String,
-//   email: String,
-//   phone: String,
-//   status: String,
-//   claimedBy: String,
-// });
+// MongoDB Connection
+mongoose
+  .connect("mongodb://localhost:27017/Uz")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-// // Model
-// const LostItem = mongoose.model('LostItem', lostItemSchema);
+// Mongoose Schema
+const itemSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  category: String,
+  location: String,
+  email: String,
+  phone: String,
+  status: String, // "lost" or "found"
+  imagePath: String,
+  date: { type: Date, default: Date.now },
+});
 
-// // Route to handle form submission (POST request)
-// app.post('/api/lost-item', (req, res) => {
-//   const { title, description, category, location, dateLost, postedBy, email, phone, status, claimedBy } = req.body;
+const Item = mongoose.model("Item", itemSchema);
 
-//   const newLostItem = new LostItem({
-//     title,
-//     description,
-//     category,
-//     location,
-//     dateLost,
-//     postedBy,
-//     email,
-//     phone,
-//     status,
-//     claimedBy,
-//   });
+// Multer Configuration for File Uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
-//   newLostItem.save()
-//     .then(() => {
-//       res.status(201).json({ message: 'Lost item saved successfully!' });
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ error: 'Failed to save lost item' });
-//     });
-// });
+const upload = multer({ storage });
 
-// // Start server
-// const port = process.env.PORT || 5000;
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-// });
+// Routes
+
+// POST route for Lost Items
+app.post("/api/lost", upload.single("image"), async (req, res) => {
+  try {
+    const { title, description, category, location, email, phone } = req.body;
+    const lostItem = new Item({
+      title,
+      description,
+      category,
+      location,
+      email,
+      phone,
+      status: "lost",
+      imagePath: req.file ? `/uploads/${req.file.filename}` : null,
+    });
+    await lostItem.save();
+    res.status(201).json(lostItem);
+  } catch (err) {
+    res.status(500).json({ message: "Error saving lost item", error: err });
+  }
+});
+
+// POST route for Found Items
+app.post("/api/found", upload.single("image"), async (req, res) => {
+  try {
+    const { title, description, category, location, email, phone } = req.body;
+    const foundItem = new Item({
+      title,
+      description,
+      category,
+      location,
+      email,
+      phone,
+      status: "found",
+      imagePath: req.file ? `/uploads/${req.file.filename}` : null,
+    });
+    await foundItem.save();
+    res.status(201).json(foundItem);
+  } catch (err) {
+    res.status(500).json({ message: "Error saving found item", error: err });
+  }
+});
+
+// GET route to fetch all items
+app.get("/api/items", async (req, res) => {
+  try {
+    const items = await Item.find().sort({ date: -1 });
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching items", error: err });
+  }
+});
+
+// Start Server
+app.listen(5000, () => console.log("Server running on http://localhost:5000"));
