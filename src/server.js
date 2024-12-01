@@ -19,7 +19,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // MongoDB Connection
 mongoose
-  .connect("mongodb://localhost:27017/Uz")
+  .connect("mongodb://localhost:27017/")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -103,6 +103,18 @@ app.get("/api/items", async (req, res) => {
     res.status(500).json({ message: "Error fetching items", error: err });
   }
 });
+
+
+
+// app.get("/api/items", async (req, res) => {
+//     try {
+//       const items = await Item.find().sort({ date: -1 }); // Most recent first
+//       res.status(200).json(items);
+//     } catch (err) {
+//       res.status(500).json({ message: "Error fetching items", error: err });
+//     }
+//   });
+  
 
 // Start Server
 app.listen(5000, () => console.log("Server running on http://localhost:5000"));

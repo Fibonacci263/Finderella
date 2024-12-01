@@ -1,19 +1,30 @@
 import PropTypes from "prop-types";
 import "./LostItemCard.css";
-import bicycle from "./bicycle.jpeg"
 
-const LostItemCard = ({title,description,category,location,dateLost, email,phone}) => {
-    return (
-         <div className="lost-item-card">
-         <div className="header">
+const LostItemCard = ({
+  title,
+  description,
+  category,
+  location,
+  dateLost,
+  email,
+  phone,
+  imageUrl,
+}) => {
+  return (
+    <div className="lost-item-card">
+      <div className="header">
         <span className="status-label">Lost</span>
         <span className="date">{dateLost}</span>
-        
       </div>
       <h3 className="title">{title}</h3>
       <p className="description">{description}</p>
       <div className="image-container">
-        <img src={bicycle} alt={title} className="item-image" />
+        {imageUrl ? (
+          <img src={imageUrl} alt={title} className="item-image" />
+        ) : (
+          <p>No image available</p>
+        )}
       </div>
       <div className="details">
         <p>
@@ -22,24 +33,19 @@ const LostItemCard = ({title,description,category,location,dateLost, email,phone
         <p>
           <strong>Location:</strong> {location}
         </p>
-        
-        
-        
-        
       </div>
       <div className="contact-info">
         <p>
-        <u><strong>Contact:</strong></u>
+          <u>
+            <strong>Contact:</strong>
+          </u>
         </p>
         <p>Email: {email}</p>
-        <p>Phone: {phone || "set private"}</p>
+        <p>Phone: {phone || "Not provided"}</p>
       </div>
-      
     </div>
   );
 };
-
-
 
 // Add PropTypes for validation
 LostItemCard.propTypes = {
@@ -48,18 +54,15 @@ LostItemCard.propTypes = {
   category: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   dateLost: PropTypes.string.isRequired,
-  postedBy: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string,
-  status: PropTypes.string.isRequired,
-  claimedBy: PropTypes.string,
 };
 
 // Add default props for optional fields
 LostItemCard.defaultProps = {
   phone: "Not provided",
-  claimedBy: "N/A",
+  imageUrl: null,
 };
 
 export default LostItemCard;

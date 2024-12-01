@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
@@ -11,45 +10,70 @@ import ReportLost from "./ReportL.jsx"
 import ReportFound from "./ReportF.jsx"
 import Help from "./Help.jsx"
 import Disclaimer from "./Disclaimer.jsx";
+// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from "react";
 
 
 // Define the Home component
-const Home = () => (
-  <>
-    <FilterBar />
-    <LostItemCard
-      title="Cycle Bmx"
-      description="I lost the cycle from Library place. It's green in color and adult size."
-      category="CYCLE"
-      location="Main Library"
-      dateLost="2024-12-27"
-      email="johndoe@gmail.com.com"
-      phone="0777456234"
-      
-    
-    />
-    <LostItemCard
-      title="Mountain Bike"
-      description="I lost the cycle from NC5 place. It's Blue in color and adult size."
-      category="Cycle"
-      location="Citadel"
-      dateLost="2024-11-22"
-      email="samtarly@gmail.com"
-      phone="0789909865"
-     
-    />
-    <LostItemCard
-      title="Cycle Kona Brand"
-      description="I lost the cycle from NC4 place. It's green in color and adult size."
-      category="CYCLE"
-      location="NC4"
-      dateLost="2024-12-22"
-      email="aegon@gmail.com"
-      phone="0745377256"
-      
-    />
-  </>
-);
+
+const Home = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch items from the database
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/items");
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await response.json();
+        setItems(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  if (loading) {
+    return <div>Loading items...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div>
+      <FilterBar />
+      {items.length > 0 ? (
+        items.map((item) => (
+          <LostItemCard
+            key={item._id}
+            title={item.title}
+            description={item.description}
+            category={item.category}
+            location={item.location}
+            dateLost={new Date(item.date).toLocaleDateString()}
+            email={item.email}
+            phone={item.phone}
+            imageUrl={`http://localhost:5000${item.imagePath}`}
+          />
+        ))
+      ) : (
+        <p>No items found.</p>
+      )}
+    </div>
+  );
+};
+
+
 
 function App() {
   return (
