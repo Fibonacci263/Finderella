@@ -1,0 +1,132 @@
+/* Body Styling */
+body {
+    background: rgb(214, 212, 212);
+    text-align: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* General Container Styles */
+  .container {
+    background: linear-gradient(135deg, #949197, #294a81); /* Gradient background */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: transform 0.2s;
+    max-width: 500px;
+    text-align: center;
+    margin: 20px auto;
+    color: #fff; /* White text for better contrast */
+  }
+  
+  /* Header Styling */
+  .container h1 {
+    font-size: x-large;
+    text-align: center;
+    color: #fff; /* Matches the gradient */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Adds depth to text */
+  }
+  
+  /* Label Styles */
+  form label {
+    font-size: 15px;
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  /* Input and Select Fields */
+  form input[type="text"],
+  form input[type="date"],
+  form input[type="email"],
+  form input[type="file"],
+  form select,
+  form textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    color: #333; /* Dark text for readability */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* Textarea Specific Styles */
+  form textarea {
+    resize: none;
+    min-height: 100px;
+    max-height: 150px;
+    font-size: 14px;
+  }
+  
+  /* Input Focus Styles */
+  form input:focus,
+  form select:focus,
+  form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  
+  /* Buttons */
+  form button {
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 15px 10px 0;
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: 40%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+  
+  form button[type="button"] {
+    background: linear-gradient(135deg, #ff512f, #dd2476); /* Reset button gradient */
+  }
+  
+  form button[type="submit"] {
+    background: linear-gradient(135deg, #34e89e, #0f3443); /* Submit button gradient */
+  }
+  
+  form button:hover {
+    transform: translateY(-3px);
+  }
+  
+  form button:active {
+    transform: translateY(1px);
+  }
+  
+  /* Hover Effects */
+  form button:hover {
+    background-color: #000080; /* Your hover effect */
+  }
+  
+  form button:active {
+    background-color: #000060; /* Darker effect when active */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  
+    form button {
+      font-size: 0.9rem;
+      width: 100%;
+    }
+  
+    form textarea {
+      height: 100px;
+    }
+  }
+  

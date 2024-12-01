@@ -1,0 +1,113 @@
+.lost-item-card {
+  border: 2px solid #007bff; /* Visible border */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+  padding: 16px;
+  margin: 12px;
+  display: inline-block;
+  max-width: 350px;
+  background-color: #f9f9f9; /* Softer background */
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lost-item-card:hover {
+  transform: scale(1.02); /* Subtle zoom on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-label {
+  color: white;
+  background-color: #28a745; /* Updated for better visibility */
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.date,
+.posted-by {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin: 8px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.description {
+  color: #555;
+  font-size: 1rem;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.image-container {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.item-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.details p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.contact-info p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.claim-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.claim-button:hover {
+  background-color: white;
+  color: #007bff;
+  border-color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .lost-item-card {
+    max-width: 100%;
+    margin: 8px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+}
