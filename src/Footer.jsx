@@ -2,7 +2,7 @@
 function Footer(){
     return(
         <footer>
-            <p>&copy; {new Date().getFullYear()} HCE Group 2(Group Nova)</p>
+            <p>&copy; {new Date().getFullYear()} Finderella.Inc</p>
         </footer>
     )
 }

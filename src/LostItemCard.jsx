@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import "./LostItemCard.css";
+import "./styles/LostItemCard.css";
 
 const LostItemCard = ({
   title,
@@ -19,6 +19,7 @@ const LostItemCard = ({
       </div>
       <h3 className="title">{title}</h3>
       <p className="description">{description}</p>
+      
       <div className="image-container">
         {imageUrl ? (
           <img src={imageUrl} alt={title} className="item-image" />
@@ -57,6 +58,7 @@ LostItemCard.propTypes = {
   imageUrl: PropTypes.string,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string,
+  status: PropTypes.string,
 };
 
 // Add default props for optional fields

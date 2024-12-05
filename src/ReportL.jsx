@@ -1,4 +1,4 @@
-import './Forms.css';
+import './styles/Forms.css';
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 
@@ -6,6 +6,7 @@ const LostForm = () => {
   const [values, setValues] = useState({
     itemname: '',
     date: '',
+    location:'',
     email: '',
     contact: '',
     category: '',
@@ -30,6 +31,7 @@ const LostForm = () => {
     setValues({
       itemname: '',
       date: '',
+      location: '',
       email: '',
       contact: '',
       description: '',
@@ -48,7 +50,7 @@ const LostForm = () => {
     formData.append('title', values.itemname);
     formData.append('description', values.description);
     formData.append('category', values.category);
-    formData.append('location', values.date); // Assuming date represents location field (change if needed)
+    formData.append('location', values.location);
     formData.append('email', values.email);
     formData.append('phone', values.contact);
     formData.append('image', values.image);
@@ -97,6 +99,20 @@ const LostForm = () => {
           value={values.date}
         />
 
+
+        <label htmlFor="location"> Location Lost* </label>
+        <input
+          type="text"
+          placeholder="Enter Location Where Item Was Lost"
+          name="location"
+          onChange={handleChanges}
+          required
+          value={values.location}
+        />
+
+    
+
+
         <label htmlFor="email"> Email* </label>
         <input
           type="email"
@@ -127,10 +143,11 @@ const LostForm = () => {
           <option value="" disabled>
             Select Category
           </option>
-          <option value="electronics">Electronics</option>
-          <option value="clothing">Clothing</option>
-          <option value="jewellery">Jewellery</option>
-          <option value="documents">Documents</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Jewellery">Jewellery</option>
+          <option value="Documents">Documents</option>
+          <option value="Miscellaneous">Miscellaneous</option>
         </select>
 
         <label htmlFor="picture"> Image </label>
