@@ -147,7 +147,7 @@ const LostForm = () => {
           <option value="Clothing">Clothing</option>
           <option value="Jewellery">Jewellery</option>
           <option value="Documents">Documents</option>
-          <option value="Miscellaneous">Miscellaneous</option>
+          <option value="Others">Others</option>
         </select>
 
         <label htmlFor="picture"> Image </label>

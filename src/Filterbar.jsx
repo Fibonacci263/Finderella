@@ -5,31 +5,28 @@ import "./styles/Filterbar.css";
 // eslint-disable-next-line react/prop-types
 const FilterBar = ({ onSearch, onFilter, onReload }) => {
   const [type, setType] = useState("lost");
-  const [category, setCategory] = useState("electronics");
+  const [category, setCategory] = useState("Electronics");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleFilterChange = (value, type) => {
-    if (type === "type") {
+  const handleFilterChange = (value, filterType) => {
+    if (filterType === "type") {
       setType(value);
-      onFilter(value, category); // Trigger filter with type and current category
-    } else if (type === "category") {
+    } else if (filterType === "category") {
       setCategory(value);
-      onFilter(type, value); // Trigger filter with current type and new category
     }
+    onFilter(value, filterType); // Call the parent `onFilter` function
   };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-    onSearch(e.target.value); // Trigger search on input change
-  };
-
-  const handleSearchSubmit = () => {
-    onSearch(searchQuery); // Trigger search when user clicks the search button
+    onSearch(e.target.value); // Call the parent `onSearch` function
   };
 
   const handleReload = () => {
     setSearchQuery(""); // Reset search input
-    onReload(); // Trigger reload to fetch the original data
+    setType("lost"); // Reset type
+    setCategory("Electronics"); // Reset category
+    onReload(); // Trigger reload to fetch all data
   };
 
   return (
@@ -55,13 +52,9 @@ const FilterBar = ({ onSearch, onFilter, onReload }) => {
           <option value="Electronics">Electronics</option>
           <option value="Documents">Documents</option>
           <option value="Clothing">Clothing</option>
+          <option value="Jewellery">Jewellery</option>
           <option value="Others">Others</option>
-          <option value="Miscellaneous">Miscellaneous</option>
         </select>
-
-        <button className="filter-button" onClick={() => onFilter(type, category)}>
-          Filter
-        </button>
 
         <input
           type="text"
@@ -71,12 +64,10 @@ const FilterBar = ({ onSearch, onFilter, onReload }) => {
           onChange={handleSearchChange}
         />
 
-        <button className="search-button" onClick={handleSearchSubmit}>
-          Search
+        <button className="reload-button" onClick={handleReload}> Reload
         </button>
-        <button className="reload-button" onClick={handleReload}>
-          Reload
-        </button>
+          
+         
       </div>
     </div>
   );

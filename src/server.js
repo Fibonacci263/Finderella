@@ -105,6 +105,23 @@ app.get("/api/items", async (req, res) => {
 });
 
 
+// GET route to fetch filtered items
+app.get("/api/items", async (req, res) => {
+  try {
+    const { type, category } = req.query;
+
+    const filters = {};
+    if (type) filters.status = type; // Filter by type (lost or found)
+    if (category) filters.category = category; // Filter by category
+
+    const items = await Item.find(filters).sort({ date: -1 });
+    res.status(200).json(items);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching items", error: err });
+  }
+});
+
+
 
 // app.get("/api/items", async (req, res) => {
 //     try {
